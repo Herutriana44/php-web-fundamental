@@ -1,0 +1,50 @@
+name: Generate PDF Documentation
+
+on:
+  push:
+    branches: [ master, main ]
+    paths:
+      - '**.md'
+      - 'md_to_pdf_simple.py'
+      - 'requirements.txt'
+  workflow_dispatch:
+
+jobs:
+  convert-to-pdf:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Convert Markdown to PDF
+        run: python3 md_to_pdf_simple.py
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dokumentasi-web-fundamental
+          path: dokumentasi_web_fundamental_*.pdf
+          retention-days: 90
+          if-no-files-found: error
+
+      - name: Get PDF filename
+        id: pdf-file
+        run: echo "filename=$(ls dokumentasi_web_fundamental_*.pdf)" >> $GITHUB_OUTPUT
+
+      - name: Display artifact info
+        run: |
+          echo "PDF generated successfully!"
+          echo "Filename: ${{ steps.pdf-file.outputs.filename }}"
+          ls -lh dokumentasi_web_fundamental_*.pdf
