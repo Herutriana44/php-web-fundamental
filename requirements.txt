@@ -1,23 +1,12 @@
 # Dependensi untuk convert Markdown ke PDF
 # Install dengan: pip install -r requirements.txt
 
-# === WAJIB (semua script butuh ini) ===
+# === MARKDOWN PARSER (pilih salah satu) ===
 markdown>=3.4
+markdown-it-py>=3.0
 
-# === METODE 1: weasyprint (Recommended untuk Termux) ===
-# Pure Python, tidak butuh binary eksternal
-# Dipakai oleh: md_to_pdf_simple.py
+# === PDF GENERATOR ===
 weasyprint>=60.0
 
-# === METODE 2: pdfkit (alternatif) ===
-# Butuh install wkhtmltopdf juga: pkg install wkhtmltopdf
-# Dipakai oleh: md_to_pdf.py, md_to_pdf_v2.py
-# pdfkit>=1.0.0
-
-# === METODE 3: pypandoc (alternatif) ===
-# Butuh install pandoc juga: pkg install pandoc
-# Dipakai oleh: md_to_pdf_v2.py (METHOD='pypandoc')
-# pypandoc>=1.11
-
-# === OPSIONAL: syntax highlighting untuk code block ===
+# === OPSIONAL ===
 Pygments>=2.15

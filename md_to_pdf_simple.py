@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Script convert semua .md ke 1 PDF.
-Gunakan markdown-it-py (tersedia di Termux).
+Auto-detect markdown parser: markdown (CI) atau markdown-it-py (Termux).
 Untuk PDF: install weasyprint dulu (pip install weasyprint),
 atau script akan menyimpan sebagai .html jika weasyprint tidak ada.
 """
@@ -12,7 +12,6 @@ from pathlib import Path
 from datetime import datetime
 
 # HTML tags yang sering muncul sebagai referensi kode di teks (bukan HTML asli)
-# Ini perlu di-escape agar tidak di-render sebagai HTML oleh parser markdown
 HTML_TAGS_IN_TEXT = [
     'table', '/table', 'tr', '/tr', 'th', '/th', 'td', '/td',
     'form', '/form', 'input', 'textarea', '/textarea',
@@ -32,16 +31,12 @@ HTML_TAGS_IN_TEXT = [
 
 
 def escape_html_tags_in_text(md_content):
-    """
-    Escape raw HTML tags yang muncul sebagai teks referensi (bukan di dalam code block).
-    Contoh: '* <table>: Pembungkus' -> '* `<table>`: Pembungkus'
-    """
+    """Escape raw HTML tags yang muncul sebagai teks referensi di luar code block."""
     lines = md_content.split('\n')
     result_lines = []
     in_code_block = False
 
     for line in lines:
-        # Deteksi awal/akhir fenced code block
         if line.strip().startswith('```'):
             in_code_block = not in_code_block
             result_lines.append(line)
@@ -51,10 +46,7 @@ def escape_html_tags_in_text(md_content):
             result_lines.append(line)
             continue
 
-        # Escape HTML tags yang berdiri sendiri sebagai referensi
-        # Pola: <tagname> atau </tagname> yang muncul di luar backtick
         for tag in HTML_TAGS_IN_TEXT:
-            # Hanya escape jika tag tidak sudah berada dalam backtick
             pattern = r'(?<!`)(' + re.escape(f'<{tag}>') + r')(?!`)'
             line = re.sub(pattern, r'`\1`', line)
 
@@ -63,14 +55,40 @@ def escape_html_tags_in_text(md_content):
     return '\n'.join(result_lines)
 
 
-def main():
-    # Coba import markdown_it (pasti ada di Termux)
+def get_markdown_parser():
+    """Coba import markdown parser yang tersedia. Return (parser, type_name)."""
+    try:
+        import markdown
+        md = markdown.Markdown(extensions=['extra', 'tables', 'toc', 'fenced_code'])
+        return md, 'markdown'
+    except ImportError:
+        pass
+
     try:
         from markdown_it import MarkdownIt
+        return MarkdownIt(), 'markdown-it-py'
     except ImportError:
-        print("Error: markdown-it-py tidak terinstall.")
-        print("Install: pip install markdown-it-py")
-        sys.exit(1)
+        pass
+
+    print("Error: tidak ada markdown parser terinstall.")
+    print("Install salah satu:")
+    print("  pip install markdown")
+    print("  pip install markdown-it-py")
+    sys.exit(1)
+
+
+def render_markdown(parser, parser_type, md_content):
+    """Render markdown ke HTML sesuai tipe parser."""
+    if parser_type == 'markdown':
+        parser.reset()
+        return parser.convert(md_content)
+    else:
+        return parser.render(md_content)
+
+
+def main():
+    parser, parser_type = get_markdown_parser()
+    print(f"Menggunakan parser: {parser_type}")
 
     base_dir = Path(__file__).parent
     md_files = sorted(base_dir.glob("**/*.md"))
@@ -90,9 +108,6 @@ def main():
     for f in md_files:
         print(f"  - {f.relative_to(base_dir)}")
 
-    # Inisialisasi markdown parser
-    md = MarkdownIt()
-
     # Gabungkan semua markdown
     combined_md = ""
     for f in md_files:
@@ -100,7 +115,6 @@ def main():
         print(f"  Memproses: {rel_path}")
 
         raw = f.read_text(encoding='utf-8')
-        # Escape HTML tags yang muncul sebagai teks referensi
         escaped = escape_html_tags_in_text(raw)
         combined_md += f"\n\n# {f.stem}\n\n"
         combined_md += escaped
@@ -108,7 +122,7 @@ def main():
 
     # Render markdown ke HTML
     print("\nMerender HTML...")
-    html_body = md.render(combined_md)
+    html_body = render_markdown(parser, parser_type, combined_md)
 
     # CSS styling
     css = """
@@ -214,15 +228,15 @@ def main():
 </body>
 </html>"""
 
-    # Simpan HTML dulu
+    # Simpan HTML
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     html_path = base_dir / f"dokumentasi_web_fundamental_{timestamp}.html"
     html_path.write_text(html_full, encoding='utf-8')
     print(f"  HTML disimpan: {html_path.name}")
 
-    # Coba generate PDF dengan weasyprint
+    # Generate PDF dengan weasyprint
     try:
-        from weasyprint import HTML as WHTML, CSS
+        from weasyprint import HTML as WHTML
         pdf_path = base_dir / f"dokumentasi_web_fundamental_{timestamp}.pdf"
         print("Membuat PDF dengan weasyprint...")
         WHTML(string=html_full).write_pdf(pdf_path)
@@ -231,7 +245,6 @@ def main():
     except ImportError:
         print("\nweasyprint tidak terinstall. Hanya HTML yang disimpan.")
         print("Untuk PDF, install: pip install weasyprint")
-        print("Lalu jalankan ulang script ini.")
     except Exception as e:
         print(f"  Error PDF: {e}")
 
