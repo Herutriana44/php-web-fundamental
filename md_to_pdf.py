@@ -10,6 +10,49 @@ import re
 import sys
 from pathlib import Path
 
+# HTML tags yang sering muncul sebagai referensi kode di teks (bukan HTML asli)
+HTML_TAGS_IN_TEXT = [
+    'table', '/table', 'tr', '/tr', 'th', '/th', 'td', '/td',
+    'form', '/form', 'input', 'textarea', '/textarea',
+    'button', '/button', 'select', '/select', 'option', '/option',
+    'label', '/label', 'fieldset', '/fieldset', 'legend', '/legend',
+    'html', '/html', 'head', '/head', 'body', '/body',
+    'header', '/header', 'nav', '/nav', 'main', '/main',
+    'section', '/section', 'article', '/article', 'aside', '/aside',
+    'footer', '/footer', 'div', '/div', 'span', '/span',
+    'h1', '/h1', 'h2', '/h2', 'h3', '/h3', 'h4', '/h4', 'h5', '/h5', 'h6', '/h6',
+    'p', '/p', 'a', '/a', 'img', 'ul', '/ul', 'ol', '/ol', 'li', '/li',
+    'br', 'hr', 'strong', '/strong', 'em', '/em', 'b', '/b', 'i', '/i', 'u', '/u',
+    'script', '/script', 'style', '/style', 'link', 'meta', 'title', '/title',
+    'iframe', '/iframe', 'video', '/video', 'audio', '/audio',
+    'pre', '/pre', 'code', '/code', 'blockquote', '/blockquote',
+]
+
+
+def escape_html_tags_in_text(md_content):
+    """Escape raw HTML tags yang muncul sebagai teks referensi di luar code block."""
+    lines = md_content.split('\n')
+    result_lines = []
+    in_code_block = False
+
+    for line in lines:
+        if line.strip().startswith('```'):
+            in_code_block = not in_code_block
+            result_lines.append(line)
+            continue
+
+        if in_code_block:
+            result_lines.append(line)
+            continue
+
+        for tag in HTML_TAGS_IN_TEXT:
+            pattern = r'(?<!`)(' + re.escape(f'<{tag}>') + r')(?!`)'
+            line = re.sub(pattern, r'`\1`', line)
+
+        result_lines.append(line)
+
+    return '\n'.join(result_lines)
+
 try:
     import markdown
 except ImportError:
@@ -107,6 +150,7 @@ def main():
             with open(md_file, 'r', encoding='utf-8') as f:
                 md_content = f.read()
 
+            md_content = escape_html_tags_in_text(md_content)
             html_content = markdown_to_html(md_content)
 
             # Tambahkan title dan content ke combined HTML
