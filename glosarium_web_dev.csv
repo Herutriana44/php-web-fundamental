@@ -1,0 +1,139 @@
+Istilah,Kategori,Definisi
+HTML,Web Fundamental,HyperText Markup Language - bahasa markup standar untuk membuat struktur halaman web
+CSS,Web Fundamental,Cascading Style Sheets - bahasa untuk mengatur tampilan dan layout elemen HTML
+JavaScript,Web Fundamental,Bahasa pemrograman client-side yang berjalan di browser untuk memberikan interaktivitas pada halaman web
+PHP,Web Fundamental,PHP Hypertext Preprocessor - bahasa pemrograman server-side yang dieksekusi di server sebelum dikirim ke browser
+MySQL,Web Fundamental,Sistem manajemen database relasional (RDBMS) yang menggunakan SQL untuk mengelola data
+XAMPP,Web Fundamental,Paket perangkat lunak bebas yang menyediakan lingkungan pengembangan web lokal (Apache MySQL PHP Perl)
+Tag,HTML,Penanda yang diawali < dan diakhiri > untuk mendefinisikan elemen HTML
+Elemen,HTML,Kesatuan yang terdiri dari tag pembuka konten dan tag penutup
+Atribut,HTML,Informasi tambahan di dalam tag pembuka yang memberikan properti pada elemen
+Self-closing Tag,HTML,Tag yang tidak memerlukan tag penutup seperti <br> <img> <hr> <input>
+Heading,HTML,Tag h1 hingga h6 untuk membuat hierarki judul pada halaman web
+Paragraf,HTML,Tag p untuk membungkus teks paragraf
+Hyperlink,HTML,Tag a yang menghubungkan satu halaman ke halaman lain melalui atribut href
+Gambar,HTML,Tag img untuk menampilkan aset visual dengan atribut src dan alt
+List,HTML,Daftar item yang terdiri dari ul (unordered) ol (ordered) dan li (list item)
+Tabel,HTML,Struktur data tabular yang terdiri dari table tr th td untuk baris dan kolom
+Form,HTML,Kontainer untuk menerima input dari pengguna menggunakan tag form input textarea button
+Semantic HTML,HTML,Penggunaan tag HTML sesuai maknanya seperti header nav main article section aside footer
+Meta Tags,HTML,Tag di dalam head yang menyediakan metadata tentang halaman web untuk browser dan mesin pencari
+Viewport,HTML,Meta tag yang mengontrol tampilan halaman pada perangkat mobile
+Open Graph,HTML,Protokol meta tag untuk mengontrol bagaimana halaman ditampilkan saat dibagikan di media sosial
+Aksesibilitas,HTML,Praktik membuat website dapat diakses oleh semua orang termasuk penyandang disabilitas
+ARIA,HTML,Accessible Rich Internet Applications - atribut tambahan untuk meningkatkan aksesibilitas elemen web
+Alt Text,HTML,Teks alternatif pada gambar yang dibaca oleh screen reader dan ditampilkan jika gambar gagal dimuat
+Selector,CSS,Pola untuk memilih elemen HTML yang akan diberi style
+Class Selector,CSS,Selector yang diawali titik (.) untuk memilih elemen dengan class tertentu
+ID Selector,CSS,Selector yang diawali pagar (#) untuk memilih satu elemen unik dengan id tertentu
+Pseudo-class,CSS,Selector untuk memilih elemen dalam keadaan tertentu seperti :hover :focus :nth-child
+Pseudo-element,CSS,Selector untuk memilih bagian spesifik dari elemen seperti ::before ::after ::first-letter
+Box Model,CSS,Konsep yang menyatakan setiap elemen HTML adalah kotak yang terdiri dari content padding border margin
+Padding,CSS,Ruang di dalam elemen antara konten dan border
+Border,CSS,Garis tepi pembatas elemen
+Margin,CSS,Ruang di luar elemen sebagai jarak antar elemen
+Flexbox,CSS,Metode layout satu dimensi untuk mengatur posisi elemen secara horizontal atau vertikal
+Grid,CSS,Metode layout dua dimensi untuk mengatur elemen dalam baris dan kolom
+Media Query,CSS,Fitur CSS untuk menerapkan style berbeda berdasarkan ukuran layar atau karakteristik perangkat
+Responsive Design,CSS,Pendekatan desain web yang membuat halaman tampil baik di semua ukuran layar
+Transition,CSS,Properti untuk membuat perubahan style berlangsung secara halus dalam durasi tertentu
+Animation,CSS,Fitur untuk membuat animasi kompleks menggunakan keyframe
+Transform,CSS,Properti untuk memanipulasi elemen secara visual seperti rotate scale translate skew
+Z-index,CSS,Properti yang mengatur urutan tumpukan elemen yang saling bertumpuk
+Position,CSS,Properti yang menentukan metode penempatan elemen (static relative absolute fixed sticky)
+Display,CSS,Properti yang menentukan bagaimana elemen ditampilkan (block inline flex grid none)
+Variabel,JavaScript,Wadah untuk menyimpan data yang nilainya dapat berubah (let) atau tetap (const)
+Tipe Data,JavaScript,Kategori nilai yang dapat disimpan dalam variabel seperti string number boolean null undefined
+Operator,JavaScript,Simbol untuk melakukan operasi pada nilai seperti aritmatika perbandingan dan logika
+Percabangan,JavaScript,Struktur kontrol untuk menjalankan kode berdasarkan kondisi (if else switch)
+Perulangan,JavaScript,Struktur kontrol untuk menjalankan kode berulang kali (for while forEach)
+Fungsi,JavaScript,Blok kode yang dapat digunakan kembali dan menerima parameter serta mengembalikan nilai
+Arrow Function,JavaScript,Sintaks singkat untuk menulis fungsi menggunakan tanda panah =>
+Array,JavaScript,Struktur data untuk menyimpan kumpulan nilai terurut yang diakses dengan indeks
+Object,JavaScript,Struktur data untuk menyimpan kumpulan properti dalam pasangan key value
+DOM,JavaScript,Document Object Model - representasi struktur HTML yang dapat dimanipulasi dengan JavaScript
+Event,JavaScript,Aksi atau kejadian di browser seperti klik mouse tekan keyboard atau submit form
+Event Listener,JavaScript,Fungsi yang menunggu dan merespons event tertentu pada elemen HTML
+Callback,JavaScript,Fungsi yang dikirim sebagai argumen ke fungsi lain dan dieksekusi setelah operasi selesai
+Promise,JavaScript,Objek yang merepresentasikan penyelesaian atau kegagalan operasi asynchronous
+Async/Await,JavaScript,Sintaks modern untuk menangani operasi asynchronous dengan cara yang lebih mudah dibaca
+Fetch API,JavaScript,Interface modern untuk melakukan HTTP request dari browser
+Local Storage,JavaScript,API browser untuk menyimpan data secara persisten di sisi client
+JSON,JavaScript,JavaScript Object Notation - format pertukaran data ringan yang mudah dibaca manusia dan mesin
+ES6,JavaScript,EcmaScript 2015 - versi JavaScript dengan fitur modern seperti arrow function class let const
+Destructuring,JavaScript,Sintaks untuk mengekstrak nilai dari array atau properti dari object ke dalam variabel
+Spread Operator,JavaScript,Operator tiga titik (...) untuk menyebarkan elemen array atau properti object
+Rest Parameter,JavaScript,Sintaks untuk mengumpulkan sisa argumen fungsi ke dalam array
+Module,JavaScript,Sistem untuk memecah kode JavaScript ke dalam file terpisah yang dapat diimpor dan diekspor
+Jest,JavaScript,Framework testing untuk JavaScript yang populer dan mudah digunakan
+Variabel PHP,PHP,Wadah penyimpanan data yang diawali simbol dolar ($)
+Echo,PHP,Perintah PHP untuk menampilkan teks atau HTML ke browser
+Concatenation,PHP,Penggabungan string menggunakan operator titik (.)
+Array Asosiatif,PHP,Array yang menggunakan key berupa teks sebagai pengganti indeks angka
+Foreach,PHP,Perulangan khusus PHP untuk mengiterasi elemen array
+Session,PHP,Mekanisme untuk menyimpan data user di server agar dapat diakses di berbagai halaman
+GET,PHP,Metode pengiriman data melalui URL yang terlihat di browser
+POST,PHP,Metode pengiriman data secara tersembunyi tidak terlihat di URL
+PDO,PHP,PHP Data Objects - interface untuk mengakses database yang aman dari SQL Injection
+Prepared Statement,PHP,Teknik query database dengan placeholder untuk mencegah SQL Injection
+htmlspecialchars,PHP,Fungsi PHP untuk mengkonversi karakter khusus HTML mencegah serangan XSS
+password_hash,PHP,Fungsi PHP untuk mengenkripsi password menggunakan algoritma bcrypt
+CSRF Token,PHP,Token keamanan untuk mencegah Cross-Site Request Forgery
+OOP,PHP,Object-Oriented Programming - paradigma pemrograman berbasis objek dan class
+Class,PHP,Blueprint atau cetakan untuk membuat object yang berisi properti dan method
+Object,PHP,Instance dari class yang memiliki properti dan method
+Inheritance,PHP,Pewarisan - mekanisme class mewarisi properti dan method dari class induk
+Interface,PHP,Kontrak yang mendefinisikan method apa yang harus dimiliki class tanpa implementasi
+Constructor,PHP,Method khusus yang otomatis dipanggil saat object dibuat (__construct)
+Namespace,PHP,Cara untuk mengelompokkan class dan mencegah konflik nama
+Composer,PHP,Package manager untuk PHP yang mengelola dependensi proyek
+Database,MySQL,Kumpulan data terstruktur yang disimpan dan dikelola secara elektronik
+Tabel,MySQL,Struktur dalam database yang menyimpan data dalam format baris dan kolom
+Primary Key,MySQL,Kolom unik yang mengidentifikasi setiap baris data dalam tabel
+Foreign Key,MySQL,Kolom yang merujuk ke primary key di tabel lain untuk membuat relasi
+AUTO_INCREMENT,MySQL,Atribut kolom yang otomatis menambah nilai angka untuk setiap baris baru
+CRUD,MySQL,Create Read Update Delete - empat operasi dasar pada database
+SQL,MySQL,Structured Query Language - bahasa standar untuk mengelola database relasional
+SELECT,MySQL,Perintah SQL untuk mengambil data dari tabel
+INSERT,MySQL,Perintah SQL untuk menambahkan data baru ke tabel
+UPDATE,MySQL,Perintah SQL untuk mengubah data yang sudah ada di tabel
+DELETE,MySQL,Perintah SQL untuk menghapus data dari tabel
+WHERE,MySQL,Klausa SQL untuk menyaring data berdasarkan kondisi tertentu
+JOIN,MySQL,Klausa SQL untuk menggabungkan data dari dua tabel atau lebih
+GROUP BY,MySQL,Klausa SQL untuk mengelompokkan baris data yang memiliki nilai sama
+ORDER BY,MySQL,Klausa SQL untuk mengurutkan hasil query
+Index,MySQL,Struktur database yang mempercepat pencarian dan pengurutan data
+Transaction,MySQL,Sekumpulan operasi SQL yang dieksekusi sebagai satu kesatuan atomik
+Normalization,MySQL,Proses merancang struktur database untuk mengurangi redundansi data
+phpMyAdmin,MySQL,Aplikasi web untuk mengelola database MySQL melalui antarmuka grafis
+AJAX,Web Fundamental,Asynchronous JavaScript And XML - teknik mengirim dan menerima data dari server tanpa reload halaman
+API,Web Fundamental,Application Programming Interface - antarmuka untuk komunikasi antar aplikasi
+HTTP,Web Fundamental,HyperText Transfer Protocol - protokol komunikasi antara browser dan server web
+HTTPS,Web Fundamental,HTTP Secure - versi aman HTTP yang mengenkripsi data
+URL,Web Fundamental,Uniform Resource Locator - alamat unik untuk mengakses resource di web
+Domain,Web Fundamental,Nama unik yang mengidentifikasi website di internet
+Hosting,Web Fundamental,Layanan penyewaan server untuk menyimpan file website agar dapat diakses online
+DNS,Web Fundamental,Domain Name System - sistem yang menerjemahkan nama domain ke alamat IP
+IP Address,Web Fundamental,Alamat numerik unik yang mengidentifikasi perangkat di jaringan
+Server,Web Fundamental,Komputer yang menyimpan dan menyajikan website ke pengguna melalui internet
+Client,Web Fundamental,Perangkat pengguna (browser) yang meminta dan menampilkan konten dari server
+Frontend,Web Fundamental,Bagian website yang dilihat dan berinteraksi langsung dengan pengguna
+Backend,Web Fundamental,Bagian website yang berjalan di server menangani logika bisnis dan database
+Fullstack,Web Fundamental,Pengembang yang menguasai frontend dan backend
+Framework,Web Fundamental,Kerangka kerja siap pakai yang menyediakan struktur dan komponen untuk mempercepat pengembangan
+Library,Web Fundamental,Kumpulan fungsi siap pakai yang dapat digunakan dalam proyek
+Version Control,Web Fundamental,Sistem untuk melacak perubahan kode seperti Git
+Git,Web Fundamental,Sistem version control terdistribusi yang populer untuk mengelola kode proyek
+Repository,Web Fundamental,Tempat penyimpanan kode proyek yang dikelola dengan version control
+Deploy,Web Fundamental,Proses mempublikasikan aplikasi web ke server production
+Debugging,Web Fundamental,Proses menemukan dan memperbaiki bug atau kesalahan dalam kode
+XSS,Web Fundamental,Cross-Site Scripting - serangan keamanan yang menyuntikkan script berbahaya ke halaman web
+SQL Injection,Web Fundamental,Teknik serangan yang menyuntikkan perintah SQL berbahaya melalui input pengguna
+SSL,Web Fundamental,Secure Sockets Layer - teknologi enkripsi untuk koneksi aman antara browser dan server
+CDN,Web Fundamental,Content Delivery Network - jaringan server yang mendistribusikan konten web secara global
+Cache,Web Fundamental,Penyimpanan sementara data untuk mempercepat akses berikutnya
+Cookie,Web Fundamental,Data kecil yang disimpan browser untuk melacak informasi pengguna
+Web Server,Web Fundamental,Perangkat lunak seperti Apache Nginx yang melayani permintaan HTTP dari browser
+localhost,Web Fundamental,Nama host yang merujuk ke komputer lokal untuk pengembangan
+Port,Web Fundamental,Titik koneksi jaringan yang digunakan aplikasi untuk berkomunikasi (80 HTTP 443 HTTPS 3306 MySQL)
+Markdown,Web Fundamental,Bahasa markup ringan untuk menulis dokumentasi yang mudah dibaca dan dikonversi ke HTML
