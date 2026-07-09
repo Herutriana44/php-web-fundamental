@@ -154,10 +154,28 @@ def render_markdown(parser, parser_type, md_content):
         return parser.render(md_content)
 
 
-def md_to_pdf(md_path, output_dir, parser, parser_type):
-    rel_path = md_path.relative_to(md_path.parents[len(md_path.parents) - 1])
-    # Pertahankan struktur folder di output
-    pdf_name = md_path.stem + '.pdf'
+def _make_pdf_name(md_path, base_dir):
+    """Generate nama PDF: 'bab 0 - instalasi.pdf' dari path relatif."""
+    rel = md_path.relative_to(base_dir)
+    parts = rel.parts  # e.g. ('bab-0-desktop', 'instalasi.md')
+
+    # Ekstrak nomor bab dari folder parent
+    bab_num = None
+    parent_dir = parts[0] if len(parts) > 1 else ''
+    m = re.match(r'bab-(\d+)', parent_dir)
+    if m:
+        bab_num = int(m.group(1))
+
+    stem = md_path.stem.replace('_', ' ')
+
+    if bab_num is not None:
+        return f'bab {bab_num} - {stem}.pdf'
+    else:
+        return f'{stem}.pdf'
+
+
+def md_to_pdf(md_path, output_dir, parser, parser_type, base_dir):
+    pdf_name = _make_pdf_name(md_path, base_dir)
     pdf_path = output_dir / pdf_name
 
     raw = md_path.read_text(encoding='utf-8')
@@ -221,7 +239,7 @@ def main():
     for f in md_files:
         rel = f.relative_to(base_dir)
         print(f"  {rel} ...", end=" ")
-        ok, result = md_to_pdf(f, output_dir, parser, parser_type)
+        ok, result = md_to_pdf(f, output_dir, parser, parser_type, base_dir)
         if ok:
             size_kb = result.stat().st_size / 1024
             print(f"OK ({size_kb:.1f} KB)")
