@@ -1,0 +1,45 @@
+name: Generate PDF Per File
+
+on:
+  push:
+    branches: [master, main]
+    paths:
+      - '**.md'
+      - 'md_to_pdf_per_file.py'
+      - 'requirements.txt'
+  workflow_dispatch:
+
+jobs:
+  convert-per-file:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Convert each .md to .pdf
+        run: python3 md_to_pdf_per_file.py --dir . --output pdf_output
+
+      - name: List generated PDFs
+        run: |
+          echo "Generated PDFs:"
+          ls -lh pdf_output/
+
+      - name: Upload PDFs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pdf-per-file
+          path: pdf_output/*.pdf
+          retention-days: 90
+          if-no-files-found: error
