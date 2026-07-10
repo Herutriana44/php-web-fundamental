@@ -86,19 +86,43 @@ def render_markdown(parser, parser_type, md_content):
         return parser.render(md_content)
 
 
+def _natural_sort_key(path):
+    """Natural sort key: urutkan by bab number, lalu nomor prefix file, lalu nama."""
+    parts = path.parts
+    bab_num = 999
+    for p in parts:
+        m = re.match(r'bab-(\d+)', p)
+        if m:
+            bab_num = int(m.group(1))
+            break
+
+    fname = path.name
+    m = re.match(r'(\d+)[-_]?\s*', fname)
+    if m:
+        file_num = int(m.group(1))
+        rest = fname[m.end():]
+    else:
+        file_num = 999
+        rest = fname
+
+    return (bab_num, file_num, rest)
+
+
 def main():
     parser, parser_type = get_markdown_parser()
     print(f"Menggunakan parser: {parser_type}")
 
     base_dir = Path(__file__).parent
-    md_files = sorted(base_dir.glob("**/*.md"))
+    all_md = base_dir.glob("**/*.md")
 
-    # Filter: skip file di .git/ dan file PDF_CONVERTER
+    # Filter: skip file di .git/ dan PDF_CONVERTER, hanya folder bab/
     md_files = [
-        f for f in md_files
+        f for f in all_md
         if '.git' not in f.parts
         and 'PDF_CONVERTER' not in f.name
+        and any(re.match(r'bab-\d+', p) for p in f.parts)
     ]
+    md_files.sort(key=_natural_sort_key)
 
     if not md_files:
         print("Tidak ada file .md ditemukan.")

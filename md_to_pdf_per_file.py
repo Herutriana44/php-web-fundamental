@@ -16,6 +16,31 @@ import argparse
 from pathlib import Path
 from datetime import datetime
 
+
+def _natural_sort_key(path):
+    """Natural sort key: bab-N -> N, file -> order."""
+    parts = path.parts
+    # Cari folder bab-N
+    bab_idx = None
+    for i, p in enumerate(parts):
+        m = re.match(r'bab-(\d+)', p)
+        if m:
+            bab_idx = int(m.group(1))
+            break
+    if bab_idx is None:
+        bab_idx = 999
+    # Filename sort key (strip 01- prefix)
+    fname = path.name
+    m = re.match(r'(\d+)[-_]', fname)
+    if m:
+        fnum = int(m.group(1))
+        rest = fname[m.end():]
+    else:
+        fnum = 0
+        rest = fname
+    return (bab_idx, fnum, rest)
+
+
 HTML_TAGS_IN_TEXT = [
     'table', '/table', 'tr', '/tr', 'th', '/th', 'td', '/td',
     'form', '/form', 'input', 'textarea', '/textarea',
@@ -155,9 +180,13 @@ def render_markdown(parser, parser_type, md_content):
 
 
 def _make_pdf_name(md_path, base_dir):
-    """Generate nama PDF: 'bab 0 - instalasi.pdf' dari path relatif."""
+    """Generate nama PDF: 'bab 0 - instalasi.pdf' dari path relatif.
+
+    Strip prefix nomor urut (mis. '01-instalasi' -> 'instalasi') agar nama
+    PDF bersih tanpa nomor file.
+    """
     rel = md_path.relative_to(base_dir)
-    parts = rel.parts  # e.g. ('bab-0-desktop', 'instalasi.md')
+    parts = rel.parts  # e.g. ('bab-0-desktop', '01-instalasi.md')
 
     # Ekstrak nomor bab dari folder parent
     bab_num = None
@@ -166,7 +195,10 @@ def _make_pdf_name(md_path, base_dir):
     if m:
         bab_num = int(m.group(1))
 
-    stem = md_path.stem.replace('_', ' ')
+    # Strip prefix nomor urut (01-, 02-, dst) dari stem
+    stem = md_path.stem
+    stem = re.sub(r'^\d+[-_]?\s*', '', stem)
+    stem = stem.replace('_', ' ').strip()
 
     if bab_num is not None:
         return f'bab {bab_num} - {stem}.pdf'
@@ -219,13 +251,15 @@ def main():
     output_dir = Path(args.output).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    md_files = sorted(base_dir.glob("**/*.md"))
-    # Filter: skip .git, skip file di pdf_output
+    all_md = base_dir.glob("**/*.md")
+    # Filter: skip .git, skip file di pdf_output, hanya folder bab/
     md_files = [
-        f for f in md_files
+        f for f in all_md
         if '.git' not in f.parts
         and output_dir.name not in f.parts
+        and any(re.match(r'bab-\d+', p) for p in f.parts)
     ]
+    md_files.sort(key=_natural_sort_key)
 
     if not md_files:
         print("Tidak ada file .md ditemukan.")
